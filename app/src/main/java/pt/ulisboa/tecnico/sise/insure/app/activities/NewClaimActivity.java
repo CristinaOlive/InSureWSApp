@@ -48,7 +48,7 @@ public class NewClaimActivity extends AppCompatActivity implements AdapterView.O
         buttonLogOut = (Button) findViewById(R.id.buttonLogOut);
         editClaimTitle = (EditText) findViewById(R.id.editTextTitle);
         descriptionClaim = (EditText) findViewById(R.id.descriptionClaim);
-        dateText=(EditText) findViewById(R.id.datePickerAccurance);
+        dateText = (EditText) findViewById(R.id.datePickerAccurance);
         dateText.setInputType(InputType.TYPE_NULL);
         spin = (Spinner) findViewById(R.id.plateNumber);
         gState = (GlobalState) getApplicationContext();
@@ -82,12 +82,7 @@ public class NewClaimActivity extends AppCompatActivity implements AdapterView.O
                 String claimBody = descriptionClaim.getText().toString();
                 String plate = String.valueOf(spin.getSelectedItem());
                 String accuranceDate = dateText.getText().toString();
-                if (claimTitle == null || claimBody == null ||
-                        plate == null || accuranceDate == null) {
-                    Toast.makeText(_context, "Please fill all the information", Toast.LENGTH_LONG).show();
-                } else {
-                    new WSClaimTask(_context, claimTitle, accuranceDate, plate, claimBody, gState).execute();
-                }
+                new WSClaimTask(_context, claimTitle, accuranceDate, plate, claimBody, gState).execute();
             }
         });
 
@@ -113,6 +108,7 @@ public class NewClaimActivity extends AppCompatActivity implements AdapterView.O
             }
         });
     }
+
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         // An item was selected. You can retrieve the selected item using
         parent.getItemAtPosition(pos);
@@ -123,10 +119,9 @@ public class NewClaimActivity extends AppCompatActivity implements AdapterView.O
 
     }
 
-    public void addItemsOnSpineer(){
+    public void addItemsOnSpineer() {
         new WSPlatesTask(_context, spin, gState.getSessionId()).execute();
     }
-
 
 
 }

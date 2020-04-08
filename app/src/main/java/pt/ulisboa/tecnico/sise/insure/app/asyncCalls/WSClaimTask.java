@@ -59,6 +59,7 @@ public class WSClaimTask extends AsyncTask<Void, String, Boolean> {
                         }
                     }
                     gState.setClaimRecordList(claimRecord);
+                    gState.writeFileRecords(claimRecord);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

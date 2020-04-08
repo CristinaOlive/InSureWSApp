@@ -6,8 +6,6 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
-
 import pt.ulisboa.tecnico.sise.insure.app.WSHelper;
 import pt.ulisboa.tecnico.sise.insure.datamodel.ClaimRecord;
 import pt.ulisboa.tecnico.sise.insure.datamodel.GlobalState;
@@ -57,8 +55,7 @@ public class WSReadClaimTask extends AsyncTask<Void, String, ClaimRecord> {
                 Log.d(TAG, e.toString());
             }
         }else{
-            List<ClaimRecord> claimRecordList = gState.readFileRecords();
-            claimRecord = claimRecordList.get(_claimIdInt-1);
+            claimRecord = gState.readFileRecords().get(_claimIdInt-1);
             if (claimRecord != null) {
                 Log.d(TAG, "Get Claim Info result claimId " + _claimIdInt + " => " + claimRecord.toString());
                 return claimRecord;
@@ -79,7 +76,7 @@ public class WSReadClaimTask extends AsyncTask<Void, String, ClaimRecord> {
         if(result == null){
             Toast.makeText(_context, "Claim is not available!", Toast.LENGTH_LONG).show();
         } else {
-            _claimId.setText(result.getId());
+            _claimId.setText(String.valueOf(result.getId()));
             _claimTitle.setText(result.getTitle());
             _accuranceDate.setText(result.getOccurrenceDate());
             _claimPlate.setText(result.getPlate());

@@ -151,7 +151,15 @@ public class JsonCodec {
         JSONArray jsonClaimList = new JSONArray();
         for (int i = 0; i < claimRecordList.size(); i++) {
             ClaimRecord c = claimRecordList.get(i);
-            String jsonRecord = encodeClaimRecord(c);
+            JSONObject jsonRecord = new JSONObject();
+            jsonRecord.put("claimId", c.getId());
+            jsonRecord.put("claimTitle", c.getTitle());
+            jsonRecord.put("plate", c.getPlate());
+            jsonRecord.put("submissionDate", c.getSubmissionDate());
+            jsonRecord.put("occurrenceDate", c.getOccurrenceDate());
+            jsonRecord.put("description", 	c.getDescription());
+            jsonRecord.put("status", 		c.getStatus());
+            Log.i(TAG, "encodeClaimRecord:" + jsonRecord.toString());
             jsonClaimList.put(jsonRecord);
         }
         Log.i(TAG, "encodeClaimList:" + jsonClaimList.toString());
@@ -165,7 +173,8 @@ public class JsonCodec {
             claimRecord = new ArrayList<>();
             for(int i=0; i < jsonArray.length(); i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                claimRecord.add(decodeClaimRecord(jsonObject.toString()));
+                ClaimRecord claimR = decodeClaimRecord(jsonObject.toString());
+                claimRecord.add(claimR);
             }
         }  catch (JSONException e) {
             Log.d(TAG, "decodeClaimList:" + jsonResult);
