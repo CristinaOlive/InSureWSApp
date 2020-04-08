@@ -55,8 +55,8 @@ public class WSReadClaimTask extends AsyncTask<Void, String, ClaimRecord> {
                 Log.d(TAG, e.toString());
             }
         }else{
+            claimRecord = (ClaimRecord) gState.getClaimRecordList().get(_claimIdInt-1);
             if (claimRecord != null) {
-                claimRecord = (ClaimRecord) gState.getClaimItemList().get(_claimIdInt-1);
                 Log.d(TAG, "Get Claim Info result claimId " + _claimIdInt + " => " + claimRecord.toString());
                 return claimRecord;
             } else {

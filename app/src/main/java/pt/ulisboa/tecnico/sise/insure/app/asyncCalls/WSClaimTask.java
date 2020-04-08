@@ -8,11 +8,16 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pt.ulisboa.tecnico.sise.insure.app.JsonCodec;
 import pt.ulisboa.tecnico.sise.insure.app.JsonFileManager;
 import pt.ulisboa.tecnico.sise.insure.app.WSHelper;
 import pt.ulisboa.tecnico.sise.insure.app.activities.ListClaimsActivity;
 import pt.ulisboa.tecnico.sise.insure.app.activities.NewClaimActivity;
+import pt.ulisboa.tecnico.sise.insure.datamodel.ClaimItem;
+import pt.ulisboa.tecnico.sise.insure.datamodel.ClaimRecord;
 import pt.ulisboa.tecnico.sise.insure.datamodel.Customer;
 import pt.ulisboa.tecnico.sise.insure.datamodel.GlobalState;
 
@@ -67,7 +72,17 @@ public class WSClaimTask extends AsyncTask<Void, String, Boolean> {
             Log.d(TAG, "finished testing");
             gState.updateFile(gState.getSessionId());
             try {
-                gState.setClaimItemList(WSHelper.listClaims(sessionId));
+                List<ClaimItem> claimItem = WSHelper.listClaims(sessionId);
+                gState.setClaimItemList(claimItem);
+                List<ClaimRecord> claimRecord = new ArrayList<>();
+                for(ClaimItem item : claimItem) {
+                    try {
+                        claimRecord.add(WSHelper.getClaimInfo(sessionId, item.getId()));
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                gState.setClaimRecordList(claimRecord);
             } catch (Exception e) {
                 e.printStackTrace();
             }

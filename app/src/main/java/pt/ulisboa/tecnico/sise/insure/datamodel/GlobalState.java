@@ -17,6 +17,7 @@ public class GlobalState extends Application {
     private int sessionId;
     private Customer customer;
     private List<ClaimItem> claimItemList;
+    private List<ClaimRecord> claimRecordList;
 
     public int getSessionId() {
         return sessionId;
@@ -82,4 +83,11 @@ public class GlobalState extends Application {
         this.claimItemList = claimItemList;
     }
 
+    public List<ClaimRecord> getClaimRecordList() {
+        return claimRecordList;
+    }
+
+    public void setClaimRecordList(List<ClaimRecord> claimRecordList) {
+        this.claimRecordList = claimRecordList;
+    }
 }
