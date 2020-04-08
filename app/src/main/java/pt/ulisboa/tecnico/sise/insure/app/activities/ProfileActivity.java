@@ -38,9 +38,10 @@ public class ProfileActivity extends AppCompatActivity {
         customerAddress  = (TextView) findViewById(R.id.customer_address);
         insurancePolicyNumber  = (TextView) findViewById(R.id.customer_inc_pol_numb);
         sessionId = getIntent().getIntExtra("sessionId", 0);
+        boolean haveService = getIntent().getBooleanExtra("haveService", false);
 
         new WSCallCustomerProfile(customerName, customerNif, customerAddress,
-                customerBirthdate, insurancePolicyNumber, sessionId, _context).execute();
+                customerBirthdate, insurancePolicyNumber, sessionId, _context, haveService).execute();
 
         //Menu Button
         buttonProfileMenu.setOnClickListener(new View.OnClickListener() {

@@ -3,8 +3,11 @@ package pt.ulisboa.tecnico.sise.insure.app.asyncCalls;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import pt.ulisboa.tecnico.sise.insure.app.JsonCodec;
+import pt.ulisboa.tecnico.sise.insure.app.JsonFileManager;
 import pt.ulisboa.tecnico.sise.insure.app.WSHelper;
 import pt.ulisboa.tecnico.sise.insure.app.activities.LogInActivity;
+import pt.ulisboa.tecnico.sise.insure.datamodel.Customer;
 
 public class LogInAsyncRequest extends AsyncTask<String, String, Integer> {
     public final static String TAG = "CallTask";
@@ -21,7 +24,12 @@ public class LogInAsyncRequest extends AsyncTask<String, String, Integer> {
     protected Integer doInBackground(String... params) {
         int sessionId = -1;
         try {
-            return sessionId = WSHelper.login(username, password);
+            sessionId = WSHelper.login(username, password);
+            Customer customer = WSHelper.getCustomerInfo(sessionId);
+            String customerFileName = "customer.json";
+            String customerJson = JsonCodec.encodeCustomerInfo(customer);
+            JsonFileManager.jsonWriteToFile(_main, customerFileName, customerJson);
+            return sessionId;
         } catch (Exception e) {
             Log.d(TAG, e.toString());
             return sessionId;

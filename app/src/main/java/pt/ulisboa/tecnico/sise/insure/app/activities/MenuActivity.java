@@ -2,6 +2,8 @@ package pt.ulisboa.tecnico.sise.insure.app.activities;
 
 
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,6 +21,7 @@ public class MenuActivity extends AppCompatActivity {
     private Button buttonClaimsHistory;
     private Button buttonLogout;
     private  int sessionId = -1;
+    private boolean haveService;
 
     //private GlobalState globalState;
 
@@ -33,6 +36,7 @@ public class MenuActivity extends AppCompatActivity {
         buttonNewClaim  = (Button)  findViewById(R.id.main_menu_new_claim_btn);
 
         sessionId = getIntent().getIntExtra("sessionId", 0);
+        haveService = haveNetwork();
 
         //New Claim Button
         buttonNewClaim.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +44,7 @@ public class MenuActivity extends AppCompatActivity {
                 Log.d(LOG_TAG, "New Claim debug message!");
                 Intent intent = new Intent(MenuActivity.this, NewClaimActivity.class);
                 intent.putExtra("sessionId", sessionId);
+                intent.putExtra("haveService", haveService);
                 startActivityForResult(intent, InternalProtocol.NEW_CLAIM_REQUEST);
             }
         });
@@ -49,6 +54,7 @@ public class MenuActivity extends AppCompatActivity {
                 Log.d(LOG_TAG, "Profile debug message!");
                 Intent intent = new Intent(MenuActivity.this, ProfileActivity.class);
                 intent.putExtra("sessionId", sessionId);
+                intent.putExtra("haveService", haveService);
                 startActivity(intent);
             }
         });
@@ -58,6 +64,7 @@ public class MenuActivity extends AppCompatActivity {
                 Log.d(LOG_TAG, "Claims History debug message!");
                 Intent intent = new Intent(MenuActivity.this, ListClaimsActivity.class);
                 intent.putExtra("sessionId", sessionId);
+                intent.putExtra("haveService", haveService);
                 startActivity(intent);
             }
         });
@@ -73,6 +80,20 @@ public class MenuActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private boolean haveNetwork() {
+        boolean have_WIFI = false;
+        boolean have_MobileData = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo[] networkInfos = connectivityManager.getAllNetworkInfo();
+        for (NetworkInfo info : networkInfos) {
+            if (info.getTypeName().equalsIgnoreCase("WIFI"))
+                if (info.isConnected()) have_WIFI = true;
+            if (info.getTypeName().equalsIgnoreCase("MOBILE DATA"))
+                if (info.isConnected()) have_MobileData = true;
+        }
+        return have_WIFI || have_MobileData;
     }
 
 }
