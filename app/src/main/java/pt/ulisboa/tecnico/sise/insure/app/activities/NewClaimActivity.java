@@ -33,6 +33,7 @@ public class NewClaimActivity extends AppCompatActivity implements AdapterView.O
     private EditText dateText;
     private Spinner spin;
     private Context _context = this;
+    private int sessionId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,8 @@ public class NewClaimActivity extends AppCompatActivity implements AdapterView.O
         dateText=(EditText) findViewById(R.id.datePickerAccurance);
         dateText.setInputType(InputType.TYPE_NULL);
         spin = (Spinner) findViewById(R.id.plateNumber);
+
+        sessionId = getIntent().getIntExtra("sessionId", 0);
 
         dateText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,8 +80,9 @@ public class NewClaimActivity extends AppCompatActivity implements AdapterView.O
                 String claimBody = descriptionClaim.getText().toString();
                 String plate = String.valueOf(spin.getSelectedItem());
                 String accuranceDate = dateText.getText().toString();
-                new WSClaimTask(_context, claimTitle, accuranceDate, plate, claimBody).execute();
+                new WSClaimTask(_context, claimTitle, accuranceDate, plate, claimBody, sessionId).execute();
                 Intent intent = new Intent(NewClaimActivity.this, ListClaimsActivity.class);
+                intent.putExtra("sessionId", sessionId);
                 startActivity(intent);
             }
         });
@@ -111,7 +115,7 @@ public class NewClaimActivity extends AppCompatActivity implements AdapterView.O
     }
 
     public void addItemsOnSpineer(){
-        new WSPlatesTask(_context, spin).execute();
+        new WSPlatesTask(_context, spin, sessionId).execute();
     }
 
 }

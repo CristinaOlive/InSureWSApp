@@ -19,10 +19,11 @@ public class WSReadClaimTask extends AsyncTask<Void, String, ClaimRecord> {
     private TextView _claimStatus;
     int _claimIdInt;
     Context _context;
+    private int sessionId = -1;
 
     public WSReadClaimTask(int claimIdInt, TextView claimId, TextView accuranceDate, TextView claimTitle,
-                           TextView claimBody, TextView claimPlate, TextView claimStatus, Context context) {
-       //this.sessionId = sessionId
+                           TextView claimBody, TextView claimPlate, TextView claimStatus, Context context, int sessionId) {
+       this.sessionId = sessionId;
         _claimId = claimId;
         _accuranceDate = accuranceDate;
         _claimBody = claimBody;
@@ -35,18 +36,6 @@ public class WSReadClaimTask extends AsyncTask<Void, String, ClaimRecord> {
 
     @Override
     protected ClaimRecord doInBackground(Void... params) {
-        int sessionId = -1;
-        try{
-            String username = "j";
-            String password = "j";
-            sessionId = WSHelper.login(username,password);        // exists and password correct
-            Log.d(TAG, "Login result => " + sessionId);
-            publishProgress("ok.\n");
-        } catch (Exception e) {
-            Log.d(TAG, e.toString());
-            publishProgress("failed.\n");
-        }
-
         /*
          * Test method call invocation: getClaimInfo
          */

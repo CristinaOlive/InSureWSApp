@@ -11,10 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name="pt.ulisboa.tecnico.sise.insure.app.activities.ProfileActivity"/>
         <activity android:name="pt.ulisboa.tecnico.sise.insure.app.activities.NewClaimActivity"/>
         <activity android:name="pt.ulisboa.tecnico.sise.insure.app.activities.ListClaimsActivity"/>
         <activity android:name="pt.ulisboa.tecnico.sise.insure.app.activities.ReadClaimActivity"/>
+        <activity android:name="pt.ulisboa.tecnico.sise.insure.app.activities.ProfileActivity"/>
         <activity android:name="pt.ulisboa.tecnico.sise.insure.app.activities.LogInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,9 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name="pt.ulisboa.tecnico.sise.insure.app.activities.MenuActivity">
-
         </activity>
-
     </application>
 
 </manifest>

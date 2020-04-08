@@ -16,9 +16,10 @@ public class WSListClaimTask extends AsyncTask<Void, String,  List<ClaimItem>> {
     public final static String TAG = "CallTask";
     private Context _context;
     private ListView _listView;
+    private int sessionId = -1;
 
-    public WSListClaimTask(Context context, ListView listView) {
-        // this.sessionId = sessionId;
+    public WSListClaimTask(Context context, ListView listView, int sessionId) {
+        this.sessionId = sessionId;
         _context = context;
         _listView = listView;
 
@@ -26,14 +27,6 @@ public class WSListClaimTask extends AsyncTask<Void, String,  List<ClaimItem>> {
 
     @Override
     protected  List<ClaimItem> doInBackground(Void... params) {
-        int sessionId = -1;
-        try{
-            String username = "j";
-            String password = "j";
-            sessionId = WSHelper.login(username,password);        // exists and password correct
-        } catch (Exception e) {
-            Log.d(TAG, e.toString());
-        }
         /*
          * Test method call invocation: listClaims
          */

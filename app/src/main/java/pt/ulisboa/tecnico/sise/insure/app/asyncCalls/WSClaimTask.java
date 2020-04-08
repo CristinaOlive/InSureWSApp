@@ -11,35 +11,24 @@ import pt.ulisboa.tecnico.sise.insure.app.WSHelper;
 public class WSClaimTask extends AsyncTask<Void, String, Boolean> {
     public final static String TAG = "CallTask";
     private TextView _textView;
-    String _claimTitle;
-    String _claimDescripton;
-    String _plateNumber;
-    String _accuranceDate;
-    Context _context;
+    private String _claimTitle;
+    private String _claimDescripton;
+    private String _plateNumber;
+    private String _accuranceDate;
+    private Context _context;
+    private int sessionId = -1;
 
-    public WSClaimTask(Context context, String claimTitle, String accuranceDate, String plateNumber, String claimDescripton) {
+    public WSClaimTask(Context context, String claimTitle, String accuranceDate, String plateNumber, String claimDescripton, int sessionId) {
         _context = context;
         _claimTitle = claimTitle;
         _claimDescripton = claimDescripton;
         _plateNumber = plateNumber;
         _accuranceDate = accuranceDate;
+        this.sessionId = sessionId;
     }
 
     @Override
     protected Boolean doInBackground(Void... params) {
-        int sessionId = -1;
-        /*
-         * Test method call invocation: login
-         */
-        try{
-            String username = "j";
-            String password = "j";
-            sessionId = WSHelper.login(username,password);        // exists and password correct
-            Log.d(TAG, "Login result => " + sessionId);
-        } catch (Exception e) {
-            Log.d(TAG, e.toString());
-        }
-
         /*
          * Test method call invocation: submitNewClaim
          */

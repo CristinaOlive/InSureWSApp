@@ -4,48 +4,45 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import pt.ulisboa.tecnico.sise.insure.app.WSHelper;
 import pt.ulisboa.tecnico.sise.insure.datamodel.Customer;
-import pt.ulisboa.tecnico.sise.insure.datamodel.GlobalState;
 
 
 public class WSCallCustomerProfile extends AsyncTask<String, Void, Customer> {
-
     private final static String TAG = "CustomerProfile";
-
-    private Context context;
     private TextView customerName;
     private TextView customerNif;
     private TextView customerBirthdate;
     private TextView customerAddress;
-    private GlobalState globalState;
     private TextView insurancePolicyNumber;
+    private int sessionId;
+    private Context _context;
 
-
-
-    public WSCallCustomerProfile(Context applicationContext, TextView customerName, TextView customerNif, TextView customerAddress, TextView customerBirthdate, TextView insurancePolicyNumber, GlobalState globalState) {
-
-        this.context = applicationContext;
+    public WSCallCustomerProfile(TextView customerName, TextView customerNif,
+                                 TextView customerAddress, TextView customerBirthdate, TextView insurancePolicyNumber,
+                                 int sessionId, Context context) {
+        this.sessionId = sessionId;
         this.customerName = customerName;
         this.customerNif = customerNif;
         this.customerAddress = customerAddress;
         this.customerBirthdate = customerBirthdate;
         this.insurancePolicyNumber = insurancePolicyNumber;
-        this.globalState = globalState;
-
+        _context = context;
     }
 
     @Override
     protected Customer doInBackground(String... String) {
-        int sessionId = -1;
-        //publishProgress("Testing method call getCustomerInfo...");
+       //publishProgress("Testing method call getCustomerInfo...");
         try {
             Customer customer = WSHelper.getCustomerInfo(sessionId);
             if (customer == null) {
                 Log.d(TAG, "Get customer info result => null");
+                return customer;
             } else {
                 Log.d(TAG, "Get customer info result => " + customer.toString());
+                return customer;
             }
             //publishProgress("ok.\n");
         } catch (Exception e) {
@@ -58,15 +55,15 @@ public class WSCallCustomerProfile extends AsyncTask<String, Void, Customer> {
     @Override
     protected void onPostExecute(Customer customer) {
         Log.d(TAG,"Customer: " + customer);
-        if (customer != null) {
-            globalState.writeFile(customer,"CustomerProfile");
+        if (!customer.equals(null)) {
             int nif = customer.getFiscalNumber();
             customerNif.setText(String.valueOf(nif));
             customerName.setText(customer.getName());
             customerAddress.setText(customer.getAddress());
             customerBirthdate.setText(customer.getDateOfBirth());
-
+            insurancePolicyNumber.setText(String.valueOf(customer.getPolicyNumber()));
+        } else  {
+            Toast.makeText(_context, "This Customer's data is not available.", Toast.LENGTH_LONG).show();
         }
-
     }
 }

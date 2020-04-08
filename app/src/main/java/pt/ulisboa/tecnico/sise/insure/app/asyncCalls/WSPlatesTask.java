@@ -17,26 +17,14 @@ public class WSPlatesTask extends AsyncTask<Void, String, List<String>> {
     private Spinner _spin;
     private  int sessionId = -1;
 
-    public WSPlatesTask(Context context, Spinner spin) {
-        // this.sessionId = sessionId
+    public WSPlatesTask(Context context, Spinner spin, int sessionId) {
+        this.sessionId = sessionId;
         _context = context;
         _spin = spin;
     }
 
     @Override
     protected List<String> doInBackground(Void ... params) {
-        /*
-         * Test method call invocation: login
-         */
-        try {
-            String username = "j";
-            String password = "j";
-            sessionId = WSHelper.login(username, password);        // exists and password correct
-            Log.d(TAG, "Login result => " + sessionId);
-        } catch (Exception e) {
-            Log.d(TAG, e.toString());
-        }
-
         /*
          * Test method call invocation: listPlates
          */

@@ -20,6 +20,7 @@ public class ListClaimsActivity extends AppCompatActivity {
     private Button _buttonHome;
     private Button _buttonLogOut;
     private Context _context = this;
+    private int sessionId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class ListClaimsActivity extends AppCompatActivity {
         _buttonHome = (Button) findViewById(R.id.buttonHome);
         _listView = (ListView) findViewById(R.id.list_claims_list);
 
+        sessionId = getIntent().getIntExtra("sessionId", 0);
         addItemsOnList();
 
         _listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -37,6 +39,7 @@ public class ListClaimsActivity extends AppCompatActivity {
                 // create the read note activity, passing to it the index position as parameter
                 Log.d("position", position+"");
                 Intent intent = new Intent(ListClaimsActivity.this, ReadClaimActivity.class);
+                intent.putExtra("sessionId", sessionId);
                 intent.putExtra("Position", position+1);
                 startActivity(intent);
             }
@@ -60,6 +63,6 @@ public class ListClaimsActivity extends AppCompatActivity {
     }
 
     public void addItemsOnList(){
-        new WSListClaimTask(_context, _listView).execute();
+        new WSListClaimTask(_context, _listView, sessionId).execute();
     }
 }

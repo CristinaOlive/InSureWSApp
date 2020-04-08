@@ -31,7 +31,7 @@ public class LogInActivity extends AppCompatActivity {
         });
     }
 
-    public void testSession(Integer sessionId){
+    public void testSession(int sessionId){
         if (sessionId>0){
             this.sessionId = sessionId;
             String[] logInfo = {email_res.getText().toString(), password_res.getText().toString()};
