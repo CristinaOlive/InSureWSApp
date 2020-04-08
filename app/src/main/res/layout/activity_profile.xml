@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".app.activities.ProfileActivity">
+
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/insurancewc"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/insurancewc" />
+
+    <ImageView
+        android:id="@+id/profile_box"
+        android:layout_width="294dp"
+        android:layout_height="480dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.498"
+        tools:srcCompat="@android:color/background_light" />
+
+    <LinearLayout
+        android:id="@+id/profile_description"
+        android:layout_width="208dp"
+        android:layout_height="443dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_box"
+        app:layout_constraintEnd_toEndOf="@+id/profile_box"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="@+id/profile_box"
+        app:layout_constraintTop_toTopOf="@+id/profile_box">
+
+        <LinearLayout
+            android:id="@+id/profile_title"
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/profile_icon"
+                android:layout_width="9dp"
+                android:layout_height="61dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/profile" />
+
+            <TextView
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="PROFILE"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/customer_name"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:fontFamily="sans-serif-condensed-light"
+            android:lineSpacingExtra="8sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#534F4F"
+            android:textSize="14sp"
+            android:typeface="normal" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Fiscal Number"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/customer_nif"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:fontFamily="sans-serif-condensed-light"
+            android:lineSpacingExtra="8sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#534F4F"
+            android:textSize="14sp"
+            android:typeface="normal" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Address"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/customer_address"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:fontFamily="sans-serif-condensed-light"
+            android:lineSpacingExtra="8sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#534F4F"
+            android:textSize="14sp"
+            android:typeface="normal" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Date of Birth"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/customer_birthdate"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:fontFamily="sans-serif-condensed-light"
+            android:lineSpacingExtra="8sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#534F4F"
+            android:textSize="14sp"
+            android:typeface="normal" />
+
+        <EditText
+            android:id="@+id/editText5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Insurance Policy Number"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/customer_inc_pol_numb"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:fontFamily="sans-serif-condensed-light"
+            android:lineSpacingExtra="8sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#534F4F"
+            android:textSize="14sp"
+            android:typeface="normal" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@drawable/btn_rounded"
+        android:textColor="@color/colorAccent"
+        android:id="@+id/profile1_buttons"
+        android:layout_width="410dp"
+        android:layout_height="108dp"
+        android:layout_marginBottom="3dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_box"
+        tools:ignore="DuplicateIds">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/profile_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/profile_logout_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="104dp"
+                android:layout_marginRight="104dp"
+                android:text="LOGOUT"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

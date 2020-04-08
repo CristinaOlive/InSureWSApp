@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">AutoInSureWSApp</string>
+    <string name="LogIn">LogIn App</string>
+    <string name="EmailAddress">Enter your email here</string>
+    <string name="Password">Enter your password here</string>
+    <string name="btnLogin">LogIn</string>
+    <string name="backround">Backround</string>
+    <string name="insureLogo">InSure Logo</string>
+    <string name="profileBox">Profile Box</string>
+    <string name="profileIcon">Profile Icon</string>
+    <string name="profileText">PROFILE</string>
+    <string name="namefieldText">Name</string>
+    <string name="nifFieldText">Fiscal Number</string>
+    <string name="addressFieldText">Address</string>
+    <string name="dateofbirthFieldText">Date of Birth</string>
+    <string name="policynumFieldText">Insurance Policy Number</string>
+    <string name="btn_Logout">LogOut</string>
+    <string name="btn_menu">Menu</string>
+
+    <string name = "main_menu_new_claim_btn">New Claim</string>
+    <string name = "main_menu_profile_btn">Profile</string>
+    <string name = "main_menu_hst_btn">Claim History</string>
+    <string name = "main_menu_logout_btn">Logout</string>
+
+    <string name = "customer_name"></string>
+    <string name = "customer_nif"></string>
+    <string name = "customer_address"></string>
+    <string name = "customer_birthdate"></string>
+    <string name = "customer_inc_pol_numb"></string>
+
+    <string name = "profile_menu_btn"></string>
+    <string name = "profile_logout_btn"></string>
+
+
+</resources>
