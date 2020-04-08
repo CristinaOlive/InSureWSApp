@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import pt.ulisboa.tecnico.sise.insure.app.asyncCalls.WSCallCustomerProfile;
 import pt.ulisboa.tecnico.sise.insure.app.asyncCalls.WSLogOutTask;
+import pt.ulisboa.tecnico.sise.insure.datamodel.GlobalState;
 
 public class ProfileActivity extends AppCompatActivity {
     private final String TAG = "profileActivity";
@@ -40,9 +41,10 @@ public class ProfileActivity extends AppCompatActivity {
         customerAddress  = (TextView) findViewById(R.id.customer_address);
         insurancePolicyNumber  = (TextView) findViewById(R.id.customer_inc_pol_numb);
         sessionId = getIntent().getIntExtra("sessionId", 0);
+        GlobalState _global = (GlobalState) getApplicationContext();
 
         new WSCallCustomerProfile(customerName, customerNif, customerAddress,
-                customerBirthdate, insurancePolicyNumber, sessionId, _context, isNetworkAvailable()).execute();
+                customerBirthdate, insurancePolicyNumber, _context, isNetworkAvailable(), _global).execute();
 
         //Menu Button
         buttonProfileMenu.setOnClickListener(new View.OnClickListener() {

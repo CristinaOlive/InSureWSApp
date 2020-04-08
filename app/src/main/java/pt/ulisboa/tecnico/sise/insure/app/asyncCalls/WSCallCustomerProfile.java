@@ -6,10 +6,9 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import pt.ulisboa.tecnico.sise.insure.app.JsonCodec;
-import pt.ulisboa.tecnico.sise.insure.app.JsonFileManager;
 import pt.ulisboa.tecnico.sise.insure.app.WSHelper;
 import pt.ulisboa.tecnico.sise.insure.datamodel.Customer;
+import pt.ulisboa.tecnico.sise.insure.datamodel.GlobalState;
 
 
 public class WSCallCustomerProfile extends AsyncTask<String, Void, Customer> {
@@ -19,14 +18,13 @@ public class WSCallCustomerProfile extends AsyncTask<String, Void, Customer> {
     private TextView customerBirthdate;
     private TextView customerAddress;
     private TextView insurancePolicyNumber;
-    private int sessionId;
     private Context _context;
     boolean _network;
+    GlobalState _global;
 
     public WSCallCustomerProfile(TextView customerName, TextView customerNif,
                                  TextView customerAddress, TextView customerBirthdate, TextView insurancePolicyNumber,
-                                 int sessionId, Context context, boolean network) {
-        this.sessionId = sessionId;
+                                Context context, boolean network, GlobalState global) {
         this.customerName = customerName;
         this.customerNif = customerNif;
         this.customerAddress = customerAddress;
@@ -34,6 +32,7 @@ public class WSCallCustomerProfile extends AsyncTask<String, Void, Customer> {
         this.insurancePolicyNumber = insurancePolicyNumber;
         _context = context;
         _network = network;
+        _global = global;
     }
 
     @Override
@@ -41,7 +40,7 @@ public class WSCallCustomerProfile extends AsyncTask<String, Void, Customer> {
         //publishProgress("Testing method call getCustomerInfo...");
         if(_network) {
             try {
-                Customer customer = WSHelper.getCustomerInfo(sessionId);
+                Customer customer = WSHelper.getCustomerInfo(_global.getSessionId());
                 if (customer == null) {
                     Log.d(TAG, "Get customer info result => null");
                     return customer;
@@ -55,14 +54,7 @@ public class WSCallCustomerProfile extends AsyncTask<String, Void, Customer> {
                 //publishProgress("failed.\n");
             }
         } else  {
-            String customerFileName = "customer.json";
-
-            String customerJson = JsonFileManager.jsonReadFromFile(_context, customerFileName);
-            Log.d(TAG, "customerInfo: read from - " + customerFileName);
-
-            Customer jsonCustomer = JsonCodec.decodeCustomerInfo(customerJson);
-            Log.d(TAG, "customerInfo: jsonCustomer - " + jsonCustomer);
-            return jsonCustomer;
+           return _global.readFile();
         }
         return null;
     }
