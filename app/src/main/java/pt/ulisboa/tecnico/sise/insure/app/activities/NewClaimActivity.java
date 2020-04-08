@@ -82,7 +82,12 @@ public class NewClaimActivity extends AppCompatActivity implements AdapterView.O
                 String claimBody = descriptionClaim.getText().toString();
                 String plate = String.valueOf(spin.getSelectedItem());
                 String accuranceDate = dateText.getText().toString();
-                new WSClaimTask(_context, claimTitle, accuranceDate, plate, claimBody, gState).execute();
+                if (claimTitle == null || claimBody == null ||
+                        plate == null || accuranceDate == null) {
+                    Toast.makeText(_context, "Please fill all the information", Toast.LENGTH_LONG).show();
+                } else {
+                    new WSClaimTask(_context, claimTitle, accuranceDate, plate, claimBody, gState).execute();
+                }
             }
         });
 

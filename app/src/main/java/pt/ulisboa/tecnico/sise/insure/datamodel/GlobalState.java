@@ -82,6 +82,29 @@ public class GlobalState extends Application {
         return jsonCustomer;
     }
 
+    public void writeFileRecords(List<ClaimRecord> claimRecordList) {
+        String customerFileName = "claimsRecord.json";
+        String customerJson = null;
+        try {
+            customerJson = JsonCodec.encodeRecordList(claimRecordList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        JsonFileManager.jsonWriteToFile(this, customerFileName, customerJson);
+        Log.d(TAG, "customerInfo: written to - " + customerFileName);
+    }
+
+    public List<ClaimRecord> readFileRecords() {
+        String customerFileName = "claimsRecord.json";
+
+        String customerJson = JsonFileManager.jsonReadFromFile(this, customerFileName);
+        Log.d(TAG, "customerInfo: read from - " + customerFileName);
+
+        List<ClaimRecord> jsonCustomer = JsonCodec.decodeRecordList(customerJson);
+        Log.d(TAG, "customerInfo: jsonCustomer - " + jsonCustomer);
+        return jsonCustomer;
+    }
+
     public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

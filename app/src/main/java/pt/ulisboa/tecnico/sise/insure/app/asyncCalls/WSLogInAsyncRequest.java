@@ -51,6 +51,7 @@ public class WSLogInAsyncRequest extends AsyncTask<String, String, Integer> {
                 }
             }
             gState.setClaimRecordList(claimRecord);
+            gState.writeFileRecords(claimRecord);
         } catch (Exception e) {
             e.printStackTrace();
         }

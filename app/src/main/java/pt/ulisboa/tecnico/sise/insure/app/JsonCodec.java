@@ -145,4 +145,31 @@ public class JsonCodec {
         Log.i(TAG, "encodeClaimList:" + jsonClaimList.toString());
         return jsonClaimList.toString();
     }
+
+    public static String encodeRecordList(List<ClaimRecord> claimRecordList) throws Exception {
+        if (claimRecordList == null) return "";
+        JSONArray jsonClaimList = new JSONArray();
+        for (int i = 0; i < claimRecordList.size(); i++) {
+            ClaimRecord c = claimRecordList.get(i);
+            String jsonRecord = encodeClaimRecord(c);
+            jsonClaimList.put(jsonRecord);
+        }
+        Log.i(TAG, "encodeClaimList:" + jsonClaimList.toString());
+        return jsonClaimList.toString();
+    }
+    public static List<ClaimRecord> decodeRecordList(String jsonResult) {
+        ArrayList<ClaimRecord> claimRecord = null;
+        Log.i(TAG, "decodeClaimList:" + jsonResult);
+        try {
+            JSONArray jsonArray = new JSONArray(jsonResult);
+            claimRecord = new ArrayList<>();
+            for(int i=0; i < jsonArray.length(); i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                claimRecord.add(decodeClaimRecord(jsonObject.toString()));
+            }
+        }  catch (JSONException e) {
+            Log.d(TAG, "decodeClaimList:" + jsonResult);
+        }
+        return claimRecord;
+    }
 }

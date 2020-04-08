@@ -49,6 +49,7 @@ public class WSClaimTask extends AsyncTask<Void, String, Boolean> {
                 try {
                     List<ClaimItem> claimItem = WSHelper.listClaims(sessionId);
                     gState.setClaimItemList(claimItem);
+                    gState.writeFileClaims(claimItem);
                     List<ClaimRecord> claimRecord = new ArrayList<>();
                     for(ClaimItem item : claimItem) {
                         try {
