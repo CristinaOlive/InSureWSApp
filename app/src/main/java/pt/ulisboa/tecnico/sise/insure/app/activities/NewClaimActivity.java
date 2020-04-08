@@ -98,8 +98,13 @@ public class NewClaimActivity extends AppCompatActivity implements AdapterView.O
 
         buttonLogOut.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                gState.removeFiles();
                 new WSLogOutTask(_context).execute();
-                finish();
+                Log.d(LOG_TAG, "Logout debug message!");
+                Intent intent = new Intent(NewClaimActivity.this, LogInActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                //Colocar algo que destrua o ficheiro JSON ou o limpe
+                startActivity(intent);
             }
         });
     }

@@ -51,7 +51,7 @@ public class WSListClaimTask extends AsyncTask<Void, String,  List<ClaimItem>> {
             Log.d(TAG, e.toString());
         }
         } else {
-            claimItemList = gState.getClaimItemList();
+            /*claimItemList = gState.getClaimItemList();
             if (claimItemList != null) {
                 String m = claimItemList.size() > 0 ? "" : "empty array";
                 for (ClaimItem claimItem : claimItemList) {
@@ -59,7 +59,8 @@ public class WSListClaimTask extends AsyncTask<Void, String,  List<ClaimItem>> {
                 }
                 Log.d(TAG, "List claim item result => " + m);
                 return claimItemList;
-            }
+            }*/
+            return gState.readFileClaims();
         }
         return claimItemList;
     }

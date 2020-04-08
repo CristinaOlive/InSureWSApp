@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import java.io.File;
 import java.util.List;
 
 import pt.ulisboa.tecnico.sise.insure.app.JsonCodec;
@@ -58,6 +59,29 @@ public class GlobalState extends Application {
         return jsonCustomer;
     }
 
+    public void writeFileClaims(List<ClaimItem> claimItemList) {
+        String customerFileName = "claimsList.json";
+        String customerJson = null;
+        try {
+            customerJson = JsonCodec.encodeClaimList(claimItemList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        JsonFileManager.jsonWriteToFile(this, customerFileName, customerJson);
+        Log.d(TAG, "customerInfo: written to - " + customerFileName);
+    }
+
+    public List<ClaimItem> readFileClaims() {
+        String customerFileName = "claimsList.json";
+
+        String customerJson = JsonFileManager.jsonReadFromFile(this, customerFileName);
+        Log.d(TAG, "customerInfo: read from - " + customerFileName);
+
+        List<ClaimItem> jsonCustomer = JsonCodec.decodeClaimList(customerJson);
+        Log.d(TAG, "customerInfo: jsonCustomer - " + jsonCustomer);
+        return jsonCustomer;
+    }
+
     public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -89,5 +113,13 @@ public class GlobalState extends Application {
 
     public void setClaimRecordList(List<ClaimRecord> claimRecordList) {
         this.claimRecordList = claimRecordList;
+    }
+
+    public void removeFiles() {
+        File dir = getFilesDir();
+        String customerFileName = "customer.json";
+        String customerFileNameClaim = "claimsList.json";
+        deleteFile(customerFileName);
+        deleteFile(customerFileNameClaim);
     }
 }

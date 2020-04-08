@@ -1,6 +1,5 @@
 package pt.ulisboa.tecnico.sise.insure.app.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -51,15 +50,15 @@ public class ReadClaimActivity extends AppCompatActivity {
 
         _buttonHome.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // return the return code only; no intent message is required
-                setResult(Activity.RESULT_CANCELED);
-                // finish activity
-                finish();
+                Log.d(LOG_TAG, "Logout debug message!");
+                Intent intent = new Intent(ReadClaimActivity.this, MenuActivity.class);
+                startActivity(intent);
             }
         });
 
         _buttonLogOut.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                gState.removeFiles();
                 new WSLogOutTask(_context).execute();
                 Log.d(LOG_TAG, "Logout debug message!");
                 Intent intent = new Intent(ReadClaimActivity.this, LogInActivity.class);

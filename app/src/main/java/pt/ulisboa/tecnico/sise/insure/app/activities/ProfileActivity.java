@@ -2,8 +2,6 @@ package pt.ulisboa.tecnico.sise.insure.app.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -25,7 +23,6 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView customerBirthdate;
     private TextView customerAddress;
     private TextView insurancePolicyNumber;
-    private int sessionId;
     private Context _context;
     private GlobalState gState;
 
@@ -43,7 +40,6 @@ public class ProfileActivity extends AppCompatActivity {
         customerAddress  = (TextView) findViewById(R.id.customer_address);
         insurancePolicyNumber  = (TextView) findViewById(R.id.customer_inc_pol_numb);
         gState = (GlobalState) getApplicationContext();
-        sessionId = getIntent().getIntExtra("sessionId", 0);
 
 
         new WSCallCustomerProfile(customerName, customerNif, customerAddress,
@@ -54,7 +50,6 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(TAG, "Menu Button in profile activity message!");
                 Intent intent = new Intent(ProfileActivity.this, MenuActivity.class);
-                intent.putExtra("sessionId", sessionId);
                 startActivity(intent);
             }
         });
@@ -62,6 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
         //Logout Button
         buttonProfileLogout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                gState.removeFiles();
                 new WSLogOutTask(_context).execute();
                 Log.d(TAG, "Logout debug message!");
                 Intent intent = new Intent(ProfileActivity.this, LogInActivity.class);

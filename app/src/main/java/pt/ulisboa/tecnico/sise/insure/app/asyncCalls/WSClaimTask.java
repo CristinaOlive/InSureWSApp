@@ -1,6 +1,5 @@
 package pt.ulisboa.tecnico.sise.insure.app.asyncCalls;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -11,17 +10,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import pt.ulisboa.tecnico.sise.insure.app.JsonCodec;
-import pt.ulisboa.tecnico.sise.insure.app.JsonFileManager;
 import pt.ulisboa.tecnico.sise.insure.app.WSHelper;
 import pt.ulisboa.tecnico.sise.insure.app.activities.ListClaimsActivity;
-import pt.ulisboa.tecnico.sise.insure.app.activities.NewClaimActivity;
 import pt.ulisboa.tecnico.sise.insure.datamodel.ClaimItem;
 import pt.ulisboa.tecnico.sise.insure.datamodel.ClaimRecord;
-import pt.ulisboa.tecnico.sise.insure.datamodel.Customer;
 import pt.ulisboa.tecnico.sise.insure.datamodel.GlobalState;
-
-import static pt.ulisboa.tecnico.sise.insure.app.activities.NewClaimActivity.*;
 
 public class WSClaimTask extends AsyncTask<Void, String, Boolean> {
     public final static String TAG = "CallTask";
@@ -52,10 +45,27 @@ public class WSClaimTask extends AsyncTask<Void, String, Boolean> {
         if(gState.isNetworkAvailable()) {
             try {
                 boolean r = WSHelper.submitNewClaim(sessionId, _claimTitle, _accuranceDate, _plateNumber, _claimDescripton);
+                gState.updateFile(gState.getSessionId());
+                try {
+                    List<ClaimItem> claimItem = WSHelper.listClaims(sessionId);
+                    gState.setClaimItemList(claimItem);
+                    List<ClaimRecord> claimRecord = new ArrayList<>();
+                    for(ClaimItem item : claimItem) {
+                        try {
+                            claimRecord.add(WSHelper.getClaimInfo(sessionId, item.getId()));
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                    gState.setClaimRecordList(claimRecord);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 Log.d(TAG, "Submit new claim result => " + r);
                 return r;
             } catch (Exception e) {
                 Log.d(TAG, e.toString());
+                return false;
             }
         }
         return false;
@@ -70,27 +80,10 @@ public class WSClaimTask extends AsyncTask<Void, String, Boolean> {
     protected void onPostExecute(Boolean result) {
         if(result) {
             Log.d(TAG, "finished testing");
-            gState.updateFile(gState.getSessionId());
-            try {
-                List<ClaimItem> claimItem = WSHelper.listClaims(sessionId);
-                gState.setClaimItemList(claimItem);
-                List<ClaimRecord> claimRecord = new ArrayList<>();
-                for(ClaimItem item : claimItem) {
-                    try {
-                        claimRecord.add(WSHelper.getClaimInfo(sessionId, item.getId()));
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
-                gState.setClaimRecordList(claimRecord);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
             Intent intent = new Intent(_context, ListClaimsActivity.class);
             _context.startActivity(intent);
         } else {
-            //Call toast from ativity metho
-            Toast.makeText(_context, "You can't submit claims offline!", Toast.LENGTH_LONG);
+            Toast.makeText(_context, "You can't submit claims offline!", Toast.LENGTH_LONG).show();
         }
     }
 }

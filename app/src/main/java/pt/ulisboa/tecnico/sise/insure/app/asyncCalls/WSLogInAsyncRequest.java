@@ -1,12 +1,10 @@
 package pt.ulisboa.tecnico.sise.insure.app.asyncCalls;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import pt.ulisboa.tecnico.sise.insure.app.JsonCodec;
 import pt.ulisboa.tecnico.sise.insure.app.WSHelper;
 import pt.ulisboa.tecnico.sise.insure.app.activities.LogInActivity;
 import pt.ulisboa.tecnico.sise.insure.datamodel.ClaimItem;
@@ -42,10 +40,12 @@ public class WSLogInAsyncRequest extends AsyncTask<String, String, Integer> {
             gState.writeFile(customer);
             List<ClaimItem> claimItem = WSHelper.listClaims(sessionId);
             gState.setClaimItemList(claimItem);
+            gState.writeFileClaims(claimItem);
             List<ClaimRecord> claimRecord = new ArrayList<>();
             for(ClaimItem item : claimItem) {
                 try {
-                    claimRecord.add(WSHelper.getClaimInfo(sessionId, item.getId()));
+                    ClaimRecord claimR = WSHelper.getClaimInfo(sessionId, item.getId());
+                    claimRecord.add(claimR);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
