@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import pt.ulisboa.tecnico.sise.insure.app.WSHelper;
 import pt.ulisboa.tecnico.sise.insure.datamodel.ClaimRecord;
+import pt.ulisboa.tecnico.sise.insure.datamodel.GlobalState;
 
 public class WSReadClaimTask extends AsyncTask<Void, String, ClaimRecord> {
     public final static String TAG = "CallReadClaim";
@@ -19,10 +20,11 @@ public class WSReadClaimTask extends AsyncTask<Void, String, ClaimRecord> {
     private TextView _claimStatus;
     int _claimIdInt;
     Context _context;
+    private GlobalState gState;
     private int sessionId = -1;
 
     public WSReadClaimTask(int claimIdInt, TextView claimId, TextView accuranceDate, TextView claimTitle,
-                           TextView claimBody, TextView claimPlate, TextView claimStatus, Context context, int sessionId) {
+                           TextView claimBody, TextView claimPlate, TextView claimStatus, Context context, int sessionId, GlobalState gState) {
        this.sessionId = sessionId;
         _claimId = claimId;
         _accuranceDate = accuranceDate;
@@ -32,6 +34,7 @@ public class WSReadClaimTask extends AsyncTask<Void, String, ClaimRecord> {
         _claimTitle = claimTitle;
         _claimIdInt = claimIdInt;
         _context = context;
+        this.gState = gState;
     }
 
     @Override
@@ -40,15 +43,25 @@ public class WSReadClaimTask extends AsyncTask<Void, String, ClaimRecord> {
          * Test method call invocation: getClaimInfo
          */
         ClaimRecord claimRecord = null;
-        try {
-            claimRecord = WSHelper.getClaimInfo(sessionId, _claimIdInt);
+        if(gState.isNetworkAvailable()) {
+            try {
+                claimRecord = WSHelper.getClaimInfo(sessionId, _claimIdInt);
+                if (claimRecord != null) {
+                    Log.d(TAG, "Get Claim Info result claimId " + _claimIdInt + " => " + claimRecord.toString());
+                } else {
+                    Log.d(TAG, "Get Claim Info result claimId " + _claimIdInt + " => null.");
+                }
+            } catch (Exception e) {
+                Log.d(TAG, e.toString());
+            }
+        }else{
             if (claimRecord != null) {
+                claimRecord = (ClaimRecord) gState.getClaimItemList().get(_claimIdInt-1);
                 Log.d(TAG, "Get Claim Info result claimId " + _claimIdInt + " => " + claimRecord.toString());
+                return claimRecord;
             } else {
                 Log.d(TAG, "Get Claim Info result claimId " + _claimIdInt + " => null.");
             }
-        } catch (Exception e) {
-            Log.d(TAG, e.toString());
         }
         return claimRecord;
     }

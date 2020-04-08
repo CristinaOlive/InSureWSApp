@@ -11,17 +11,20 @@ import java.util.List;
 
 import pt.ulisboa.tecnico.sise.insure.app.WSHelper;
 import pt.ulisboa.tecnico.sise.insure.datamodel.ClaimItem;
+import pt.ulisboa.tecnico.sise.insure.datamodel.GlobalState;
 
 public class WSListClaimTask extends AsyncTask<Void, String,  List<ClaimItem>> {
     public final static String TAG = "CallTask";
     private Context _context;
     private ListView _listView;
     private int sessionId = -1;
+    private GlobalState gState;
 
-    public WSListClaimTask(Context context, ListView listView, int sessionId) {
+    public WSListClaimTask(Context context, ListView listView, int sessionId, GlobalState gState) {
         this.sessionId = sessionId;
         _context = context;
         _listView = listView;
+        this.gState= gState;
 
     }
 
@@ -31,6 +34,7 @@ public class WSListClaimTask extends AsyncTask<Void, String,  List<ClaimItem>> {
          * Test method call invocation: listClaims
          */
         List<ClaimItem> claimItemList = null;
+        if(gState.isNetworkAvailable()){
         try {
             claimItemList = WSHelper.listClaims(sessionId);
             if (claimItemList != null) {
@@ -39,11 +43,23 @@ public class WSListClaimTask extends AsyncTask<Void, String,  List<ClaimItem>> {
                     m += " ("+ claimItem.toString() + ")";
                 }
                 Log.d(TAG, "List claim item result => " + m);
+                return claimItemList;
             } else {
                 Log.d(TAG, "List claim item result => null.");
             }
         } catch (Exception e) {
             Log.d(TAG, e.toString());
+        }
+        } else {
+            claimItemList = gState.getClaimItemList();
+            if (claimItemList != null) {
+                String m = claimItemList.size() > 0 ? "" : "empty array";
+                for (ClaimItem claimItem : claimItemList) {
+                    m += " (" + claimItem.toString() + ")";
+                }
+                Log.d(TAG, "List claim item result => " + m);
+                return claimItemList;
+            }
         }
         return claimItemList;
     }
@@ -55,7 +71,7 @@ public class WSListClaimTask extends AsyncTask<Void, String,  List<ClaimItem>> {
 
     @Override
     protected void onPostExecute(List<ClaimItem> result) {
-        if(result.equals(null)){
+        if(result == null){
             Toast.makeText(_context, "No Claims available", Toast.LENGTH_LONG).show();
         } else {
             // assign adapter to list view

@@ -51,9 +51,7 @@ public class NewClaimActivity extends AppCompatActivity implements AdapterView.O
         dateText=(EditText) findViewById(R.id.datePickerAccurance);
         dateText.setInputType(InputType.TYPE_NULL);
         spin = (Spinner) findViewById(R.id.plateNumber);
-
-
-
+        gState = (GlobalState) getApplicationContext();
 
         dateText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,5 +116,7 @@ public class NewClaimActivity extends AppCompatActivity implements AdapterView.O
     public void addItemsOnSpineer(){
         new WSPlatesTask(_context, spin, gState.getSessionId()).execute();
     }
+
+
 
 }

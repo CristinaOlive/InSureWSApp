@@ -24,6 +24,7 @@ public class LogInActivity extends AppCompatActivity {
         btnLogIn = findViewById(R.id.btnLogIn);
         email_res = findViewById(R.id.Email_Registry);
         password_res = findViewById(R.id.Password_Registry);
+        gState = (GlobalState) getApplicationContext();
 
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,16 +39,11 @@ public class LogInActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_LONG).show();
             Intent logIn = new Intent(this, MenuActivity.class);
             startActivity(logIn);
-            // this.finish();
+            this.finish();
         }
         else{
             Toast.makeText(getApplicationContext(), "Login Unsuccessful", Toast.LENGTH_LONG).show();
         }
     }
-    public int getSessionId(){
-        return this.sessionId;
-    }
-    public void setSessionId(Integer sessionId){
-        this.sessionId = sessionId;
-    }
+
 }

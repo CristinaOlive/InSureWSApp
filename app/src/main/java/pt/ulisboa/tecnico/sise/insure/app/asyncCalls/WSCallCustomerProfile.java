@@ -19,26 +19,24 @@ public class WSCallCustomerProfile extends AsyncTask<String, Void, Customer> {
     private TextView customerAddress;
     private TextView insurancePolicyNumber;
     private Context _context;
-    boolean _network;
     GlobalState _global;
 
     public WSCallCustomerProfile(TextView customerName, TextView customerNif,
                                  TextView customerAddress, TextView customerBirthdate, TextView insurancePolicyNumber,
-                                Context context, boolean network, GlobalState global) {
+                                Context context, GlobalState global) {
         this.customerName = customerName;
         this.customerNif = customerNif;
         this.customerAddress = customerAddress;
         this.customerBirthdate = customerBirthdate;
         this.insurancePolicyNumber = insurancePolicyNumber;
         _context = context;
-        _network = network;
         _global = global;
     }
 
     @Override
     protected Customer doInBackground(String... String) {
         //publishProgress("Testing method call getCustomerInfo...");
-        if(_network) {
+        if(_global.isNetworkAvailable()) {
             try {
                 Customer customer = WSHelper.getCustomerInfo(_global.getSessionId());
                 if (customer == null) {
@@ -61,15 +59,15 @@ public class WSCallCustomerProfile extends AsyncTask<String, Void, Customer> {
 
     @Override
     protected void onPostExecute(Customer customer) {
-        if (!customer.equals(null)) {
+        try{
             int nif = customer.getFiscalNumber();
             customerNif.setText(String.valueOf(nif));
             customerName.setText(customer.getName());
             customerAddress.setText(customer.getAddress());
             customerBirthdate.setText(customer.getDateOfBirth());
             insurancePolicyNumber.setText(String.valueOf(customer.getPolicyNumber()));
-        } else {
-            Toast.makeText(_context, "This Customer's data is not available.", Toast.LENGTH_LONG).show();
+        } catch (Exception ex) {
+            Log.d("WSCALLCUSTOMER", ex.getMessage() );
         }
     }
 }

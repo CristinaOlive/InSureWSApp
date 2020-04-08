@@ -1,5 +1,6 @@
 package pt.ulisboa.tecnico.sise.insure.app.asyncCalls;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -7,10 +8,15 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import pt.ulisboa.tecnico.sise.insure.app.JsonCodec;
+import pt.ulisboa.tecnico.sise.insure.app.JsonFileManager;
 import pt.ulisboa.tecnico.sise.insure.app.WSHelper;
 import pt.ulisboa.tecnico.sise.insure.app.activities.ListClaimsActivity;
+import pt.ulisboa.tecnico.sise.insure.app.activities.NewClaimActivity;
 import pt.ulisboa.tecnico.sise.insure.datamodel.Customer;
 import pt.ulisboa.tecnico.sise.insure.datamodel.GlobalState;
+
+import static pt.ulisboa.tecnico.sise.insure.app.activities.NewClaimActivity.*;
 
 public class WSClaimTask extends AsyncTask<Void, String, Boolean> {
     public final static String TAG = "CallTask";
@@ -30,6 +36,7 @@ public class WSClaimTask extends AsyncTask<Void, String, Boolean> {
         _plateNumber = plateNumber;
         _accuranceDate = accuranceDate;
         this.sessionId = gState.getSessionId();
+        this.gState = gState;
     }
 
     @Override
@@ -57,27 +64,18 @@ public class WSClaimTask extends AsyncTask<Void, String, Boolean> {
     @Override
     protected void onPostExecute(Boolean result) {
         if(result) {
-            Toast.makeText(_context, "Claim submited", Toast.LENGTH_LONG).show();
             Log.d(TAG, "finished testing");
-            Customer customer = null;
+            gState.updateFile(gState.getSessionId());
             try {
-                customer = WSHelper.getCustomerInfo(sessionId);
+                gState.setClaimItemList(WSHelper.listClaims(sessionId));
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            String customerJson = null;
-            try {
-                customerJson = JsonCodec.encodeCustomerInfo(customer);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            assert customerJson != null;
-            JsonFileManager.jsonWriteToFile(gState, "customer.json", customerJson);
-            gState.setCustomer(customer);
             Intent intent = new Intent(_context, ListClaimsActivity.class);
             _context.startActivity(intent);
         } else {
-            Toast.makeText(_context, "FAILED TO SUBMIT!", Toast.LENGTH_LONG).show();
+            //Call toast from ativity metho
+            Toast.makeText(_context, "You can't submit claims offline!", Toast.LENGTH_LONG);
         }
     }
 }

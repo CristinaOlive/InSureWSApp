@@ -3,6 +3,7 @@ package pt.ulisboa.tecnico.sise.insure.app.asyncCalls;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import pt.ulisboa.tecnico.sise.insure.app.JsonCodec;
 import pt.ulisboa.tecnico.sise.insure.app.WSHelper;
 import pt.ulisboa.tecnico.sise.insure.app.activities.LogInActivity;
 import pt.ulisboa.tecnico.sise.insure.datamodel.Customer;
@@ -24,29 +25,21 @@ public class WSLogInAsyncRequest extends AsyncTask<String, String, Integer> {
 
     protected Integer doInBackground(String... params) {
         int sessionId = -1;
-        Customer customer = null;
-        try {
-            customer = WSHelper.getCustomerInfo(sessionId);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        String customerJson = null;
-        try {
-            customerJson = JsonCodec.encodeCustomerInfo(customer);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        gState.writeFile(customerJson);
         try {
             sessionId = WSHelper.login(username, password);
             gState.setSessionId(sessionId);
-            return sessionId;
         } catch (Exception e) {
-            Log.d(TAG, e.toString());
-            return sessionId;
+            e.printStackTrace();
         }
+        Customer customer = null;
+        try {
+            customer = WSHelper.getCustomerInfo(sessionId);
+            gState.writeFile(customer);
+            gState.setClaimItemList(WSHelper.listClaims(sessionId));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sessionId;
     }
 
     @Override

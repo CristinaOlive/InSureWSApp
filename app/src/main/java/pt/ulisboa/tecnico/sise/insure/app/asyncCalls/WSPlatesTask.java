@@ -53,7 +53,7 @@ public class WSPlatesTask extends AsyncTask<Void, String, List<String>> {
 
     @Override
     protected void onPostExecute(List<String> list) {
-        if (list.equals(null)){
+        if (list==null){
             Toast.makeText(_context, "No plates available", Toast.LENGTH_LONG).show();
         } else {
             //Creating the ArrayAdapter instance having the plates list

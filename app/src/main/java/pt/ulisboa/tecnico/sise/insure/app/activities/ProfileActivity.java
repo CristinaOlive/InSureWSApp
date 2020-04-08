@@ -27,11 +27,13 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView insurancePolicyNumber;
     private int sessionId;
     private Context _context;
+    private GlobalState gState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
 
         buttonProfileMenu = (Button)  findViewById(R.id.profile_menu_btn);
         buttonProfileLogout  = (Button) findViewById(R.id.profile_logout_btn);
@@ -40,11 +42,12 @@ public class ProfileActivity extends AppCompatActivity {
         customerBirthdate  = (TextView) findViewById(R.id.customer_birthdate);
         customerAddress  = (TextView) findViewById(R.id.customer_address);
         insurancePolicyNumber  = (TextView) findViewById(R.id.customer_inc_pol_numb);
+        gState = (GlobalState) getApplicationContext();
         sessionId = getIntent().getIntExtra("sessionId", 0);
-        GlobalState _global = (GlobalState) getApplicationContext();
+
 
         new WSCallCustomerProfile(customerName, customerNif, customerAddress,
-                customerBirthdate, insurancePolicyNumber, _context, isNetworkAvailable(), _global).execute();
+                customerBirthdate, insurancePolicyNumber, _context, gState).execute();
 
         //Menu Button
         buttonProfileMenu.setOnClickListener(new View.OnClickListener() {
@@ -63,16 +66,10 @@ public class ProfileActivity extends AppCompatActivity {
                 Log.d(TAG, "Logout debug message!");
                 Intent intent = new Intent(ProfileActivity.this, LogInActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                //Colocar algo que destrua o ficheiro JSON ou o limpe
                 startActivity(intent);
             }
         });
-    }
-    public boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager =
-                (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo nf = connectivityManager.getActiveNetworkInfo();
-        Log.d(TAG, "Network: " + (nf != null && nf.isConnected()));
-        return (nf != null && nf.isConnected());
     }
 
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 
 import pt.ulisboa.tecnico.sise.insure.app.asyncCalls.WSListClaimTask;
 import pt.ulisboa.tecnico.sise.insure.app.asyncCalls.WSLogOutTask;
+import pt.ulisboa.tecnico.sise.insure.datamodel.GlobalState;
 
 public class ListClaimsActivity extends AppCompatActivity {
     private static final String LOG_TAG = "SISE - ListNotes";
@@ -21,6 +23,7 @@ public class ListClaimsActivity extends AppCompatActivity {
     private Button _buttonLogOut;
     private Context _context = this;
     private int sessionId;
+    private GlobalState gState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +32,8 @@ public class ListClaimsActivity extends AppCompatActivity {
         _buttonLogOut = (Button) findViewById(R.id.buttonLogOut);
         _buttonHome = (Button) findViewById(R.id.buttonHome);
         _listView = (ListView) findViewById(R.id.list_claims_list);
-
-        sessionId = getIntent().getIntExtra("sessionId", 0);
+        gState = (GlobalState) getApplicationContext();
+        sessionId = gState.getSessionId();
         addItemsOnList();
 
         _listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -63,6 +66,6 @@ public class ListClaimsActivity extends AppCompatActivity {
     }
 
     public void addItemsOnList(){
-        new WSListClaimTask(_context, _listView, sessionId).execute();
+        new WSListClaimTask(_context, _listView, sessionId, gState).execute();
     }
 }

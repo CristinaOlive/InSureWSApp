@@ -36,9 +36,8 @@ public class MenuActivity extends AppCompatActivity {
         buttonClaimsHistory  = (Button) findViewById(R.id.main_menu_hst_btn);
         buttonLogout  = (Button) findViewById(R.id.main_menu_logout_btn);
         buttonNewClaim  = (Button)  findViewById(R.id.main_menu_new_claim_btn);
-
-        sessionId = getIntent().getIntExtra("sessionId", 0);
-
+        gState = (GlobalState) getApplicationContext();
+        sessionId = gState.getSessionId();
 
         //New Claim Button
         buttonNewClaim.setOnClickListener(new View.OnClickListener() {
@@ -54,10 +53,10 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(LOG_TAG, "Profile debug message!");
                 Intent intent = new Intent(MenuActivity.this, ProfileActivity.class);
-                intent.putExtra("sessionId", sessionId);
                 startActivity(intent);
             }
         });
+
         //Claim History Button
         buttonClaimsHistory.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

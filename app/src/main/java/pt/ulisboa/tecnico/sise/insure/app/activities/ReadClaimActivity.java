@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import pt.ulisboa.tecnico.sise.insure.app.asyncCalls.WSLogOutTask;
 import pt.ulisboa.tecnico.sise.insure.app.asyncCalls.WSReadClaimTask;
+import pt.ulisboa.tecnico.sise.insure.datamodel.GlobalState;
 
 public class ReadClaimActivity extends AppCompatActivity {
     private static final String LOG_TAG = "SISE - ListNotes";
@@ -24,6 +25,7 @@ public class ReadClaimActivity extends AppCompatActivity {
     private TextView _claimBody;
     private TextView _claimPlate;
     private TextView _claimStatus;
+    private GlobalState gState;
 
 
     @Override
@@ -33,18 +35,19 @@ public class ReadClaimActivity extends AppCompatActivity {
         _buttonLogOut = (Button) findViewById(R.id.buttonLogOut);
         _buttonHome = (Button) findViewById(R.id.buttonHome);
 
+        gState = (GlobalState) getApplicationContext();
         _claimId = (TextView) findViewById(R.id.textViewId);
         _accuranceDate = (TextView) findViewById(R.id.textViewDate);
         _claimTitle = (TextView) findViewById(R.id.textViewTitle);
         _claimBody = (TextView) findViewById(R.id.textViewDesc);
         _claimPlate = (TextView) findViewById(R.id.textViewPlate);
         _claimStatus = (TextView) findViewById(R.id.textViewStatus);
-
+        int sessionId = gState.getSessionId();
         int position = getIntent().getIntExtra("Position", 0);
-        int sessionId = getIntent().getIntExtra("sessionId", 0);
+
 
         new WSReadClaimTask(position, _claimId, _accuranceDate, _claimTitle,
-                _claimBody, _claimPlate, _claimStatus, _context, sessionId).execute();
+                _claimBody, _claimPlate, _claimStatus, _context, sessionId, gState).execute();
 
         _buttonHome.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
