@@ -21,6 +21,7 @@ import java.util.Calendar;
 import pt.ulisboa.tecnico.sise.insure.app.asyncCalls.WSClaimTask;
 import pt.ulisboa.tecnico.sise.insure.app.asyncCalls.WSLogOutTask;
 import pt.ulisboa.tecnico.sise.insure.app.asyncCalls.WSPlatesTask;
+import pt.ulisboa.tecnico.sise.insure.datamodel.GlobalState;
 
 public class NewClaimActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private static final String LOG_TAG = "SISE - NewNote";
@@ -33,7 +34,9 @@ public class NewClaimActivity extends AppCompatActivity implements AdapterView.O
     private EditText dateText;
     private Spinner spin;
     private Context _context = this;
-    private int sessionId;
+    private GlobalState gState;
+
+    //We don't allow users to submit claims offline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,8 @@ public class NewClaimActivity extends AppCompatActivity implements AdapterView.O
         dateText.setInputType(InputType.TYPE_NULL);
         spin = (Spinner) findViewById(R.id.plateNumber);
 
-        sessionId = getIntent().getIntExtra("sessionId", 0);
+
+
 
         dateText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,10 +84,7 @@ public class NewClaimActivity extends AppCompatActivity implements AdapterView.O
                 String claimBody = descriptionClaim.getText().toString();
                 String plate = String.valueOf(spin.getSelectedItem());
                 String accuranceDate = dateText.getText().toString();
-                new WSClaimTask(_context, claimTitle, accuranceDate, plate, claimBody, sessionId).execute();
-                Intent intent = new Intent(NewClaimActivity.this, ListClaimsActivity.class);
-                intent.putExtra("sessionId", sessionId);
-                startActivity(intent);
+                new WSClaimTask(_context, claimTitle, accuranceDate, plate, claimBody, gState).execute();
             }
         });
 
@@ -115,7 +116,7 @@ public class NewClaimActivity extends AppCompatActivity implements AdapterView.O
     }
 
     public void addItemsOnSpineer(){
-        new WSPlatesTask(_context, spin, sessionId).execute();
+        new WSPlatesTask(_context, spin, gState.getSessionId()).execute();
     }
 
 }

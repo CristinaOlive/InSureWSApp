@@ -1,4 +1,4 @@
-package pt.ulisboa.tecnico.sise.insure.app;
+package pt.ulisboa.tecnico.sise.insure.app.asyncCalls;
 
 import android.content.Context;
 import android.util.Log;

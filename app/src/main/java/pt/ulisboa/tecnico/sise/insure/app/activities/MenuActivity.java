@@ -1,13 +1,17 @@
 package pt.ulisboa.tecnico.sise.insure.app.activities;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import pt.ulisboa.tecnico.sise.insure.datamodel.GlobalState;
 import pt.ulisboa.tecnico.sise.insure.datamodel.InternalProtocol;
 
 public class MenuActivity extends AppCompatActivity {
@@ -19,6 +23,7 @@ public class MenuActivity extends AppCompatActivity {
     private Button buttonClaimsHistory;
     private Button buttonLogout;
     private  int sessionId = -1;
+    private GlobalState gState;
 
     //private GlobalState globalState;
 
@@ -33,6 +38,7 @@ public class MenuActivity extends AppCompatActivity {
         buttonNewClaim  = (Button)  findViewById(R.id.main_menu_new_claim_btn);
 
         sessionId = getIntent().getIntExtra("sessionId", 0);
+
 
         //New Claim Button
         buttonNewClaim.setOnClickListener(new View.OnClickListener() {
@@ -72,5 +78,6 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }
