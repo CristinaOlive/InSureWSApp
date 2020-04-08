@@ -27,10 +27,18 @@
     <string name = "customer_birthdate"></string>
     <string name = "customer_inc_pol_numb"></string>
 
-    <string name = "profile_menu_btn"></string>
-    <string name = "profile_logout_btn"></string>
+    <string name = "profile_menu_btn">MENU</string>
+    <string name = "profile_logout_btn">LOGOUT</string>
 
     <string name = "menu_welcome">Welcome, </string>
     <string name = "user_name"></string>
+
+
+    <string name = "buttonLogOut">LOGOUT </string>
+    <string name = "buttonHome">HOME </string>
+    <string name = "buttonCancel">Cancel </string>
+    <string name = "buttonSubmit">Submit </string>
+
+
 
 </resources>

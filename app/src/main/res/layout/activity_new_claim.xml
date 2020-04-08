@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/background"
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/editTextTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:ems="10"
+        android:gravity="center"
         android:inputType="textPersonName"
-        android:text="Claim Title" />
+        android:text="Claim Title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+        android:textColor="#fff"
+        android:textSize="50sp"
+        android:typeface="normal" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,40 +45,76 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="date"
-        android:text="Data of Accurance:" />
+        android:text="Data of Accurance:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/descriptionClaim"
         android:layout_width="match_parent"
-        android:layout_height="271dp"
+        android:layout_height="353dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Claim's Description" />
+        android:text="Claim's Description"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="18sp" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="59dp"
-        android:orientation="horizontal">
+        android:layout_height="192dp">
 
         <Button
             android:id="@+id/buttonCancel"
-            android:layout_width="wrap_content"
+            android:layout_width="93dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Cancel" />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="110dp"
+            android:layout_marginLeft="110dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_toStartOf="@+id/buttonSubmit"
+            android:layout_toLeftOf="@+id/buttonSubmit"
+            android:background="@drawable/btn_rounded"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="@string/buttonCancel"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/buttonSubmit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Submit" />
-    </LinearLayout>
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="110dp"
+            android:layout_marginRight="110dp"
+            android:background="@drawable/btn_rounded"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="@string/buttonSubmit"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp" />
 
-    <Button
-        android:id="@+id/buttonLogOut"
-        android:layout_width="match_parent"
-        android:layout_height="62dp"
-        android:text="Log Out" />
+        <Button
+            android:id="@+id/buttonLogOut"
+            android:layout_width="108dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="155dp"
+            android:layout_marginLeft="155dp"
+            android:layout_marginEnd="147dp"
+            android:layout_marginRight="147dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/btn_rounded"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="@string/buttonLogOut"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
 
 </LinearLayout>

@@ -4,41 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/background">
 
-
-    <ImageView
-        android:id="@+id/profile_box"
-        android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:background="#FFFFFF" />
 
     <LinearLayout
         android:id="@+id/profile_description"
         android:layout_width="match_parent"
-        android:layout_height="443dp"
+        android:layout_height="621dp"
+        android:gravity="center"
         android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/profile_title"
             android:layout_width="match_parent"
-            android:layout_height="67dp"
+            android:layout_height="122dp"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/profile_icon"
-                android:layout_width="9dp"
-                android:layout_height="61dp"
+                android:layout_width="144dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/profile" />
 
             <TextView
-                android:layout_width="48dp"
+                android:layout_width="220dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="PROFILE"
-                android:textSize="18sp" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                android:textColor="#fff"
+                android:textSize="50sp"
+                android:typeface="normal" />
         </LinearLayout>
 
         <EditText
@@ -52,8 +51,7 @@
         <TextView
             android:id="@+id/customer_name"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="TextView" />
+            android:layout_height="40dp" />
 
         <EditText
             android:layout_width="match_parent"
@@ -134,39 +132,52 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/profile1_buttons"
+    <RelativeLayout
         android:layout_width="410dp"
         android:layout_height="108dp"
         android:layout_marginBottom="3dp"
-        android:background="@drawable/btn_rounded"
-        android:gravity="center_horizontal|center_vertical"
-        android:orientation="horizontal">
+        android:gravity="center_horizontal|center_vertical">
 
-        <LinearLayout
-            android:id="@+id/profile_buttons"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+        <Button
+            android:id="@+id/profile_logout_btn"
+            android:layout_width="94dp"
+            android:layout_height="41dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="94dp"
+            android:layout_marginRight="94dp"
+            android:layout_marginBottom="37dp"
+            android:background="@drawable/btn_rounded"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="@string/profile_logout_btn"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp" />
 
-            <Button
-                android:id="@+id/profile_logout_btn"
-                android:layout_width="99dp"
-                android:layout_height="71dp"
-                android:layout_marginEnd="104dp"
-                android:layout_marginRight="104dp"
-                android:text="@string/profile_logout_btn" />
+        <Button
+            android:id="@+id/profile_menu_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="107dp"
+            android:layout_marginLeft="107dp"
+            android:layout_marginTop="31dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginRight="28dp"
+            android:layout_marginBottom="37dp"
+            android:layout_toStartOf="@+id/profile_logout_btn"
+            android:layout_toLeftOf="@+id/profile_logout_btn"
+            android:background="@drawable/btn_rounded"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="@string/profile_menu_btn"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp" />
 
-            <Button
-                android:id="@+id/profile_menu_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="92dp"
-                android:layout_marginLeft="92dp"
-                android:text="@string/profile_menu_btn" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
