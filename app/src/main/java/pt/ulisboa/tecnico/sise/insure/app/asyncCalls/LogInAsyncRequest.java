@@ -29,6 +29,7 @@ public class LogInAsyncRequest extends AsyncTask<String, String, Integer> {
             String customerFileName = "customer.json";
             String customerJson = JsonCodec.encodeCustomerInfo(customer);
             JsonFileManager.jsonWriteToFile(_main, customerFileName, customerJson);
+            Log.d(TAG, "customerInfo: written to - " + customerFileName);
             return sessionId;
         } catch (Exception e) {
             Log.d(TAG, e.toString());

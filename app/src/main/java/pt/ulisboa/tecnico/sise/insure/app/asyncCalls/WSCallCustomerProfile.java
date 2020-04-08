@@ -21,11 +21,11 @@ public class WSCallCustomerProfile extends AsyncTask<String, Void, Customer> {
     private TextView insurancePolicyNumber;
     private int sessionId;
     private Context _context;
-    boolean _haveService;
+    boolean _network;
 
     public WSCallCustomerProfile(TextView customerName, TextView customerNif,
                                  TextView customerAddress, TextView customerBirthdate, TextView insurancePolicyNumber,
-                                 int sessionId, Context context, boolean haveService) {
+                                 int sessionId, Context context, boolean network) {
         this.sessionId = sessionId;
         this.customerName = customerName;
         this.customerNif = customerNif;
@@ -33,18 +33,13 @@ public class WSCallCustomerProfile extends AsyncTask<String, Void, Customer> {
         this.customerBirthdate = customerBirthdate;
         this.insurancePolicyNumber = insurancePolicyNumber;
         _context = context;
-        _haveService = haveService;
+        _network = network;
     }
 
     @Override
     protected Customer doInBackground(String... String) {
         //publishProgress("Testing method call getCustomerInfo...");
-        if(!_haveService) {
-            String customerFileName = "customer.json";
-            String customerJson = JsonFileManager.jsonReadFromFile(_context, customerFileName);
-            Customer jsonCustomer = JsonCodec.decodeCustomerInfo(customerJson);
-            return jsonCustomer;
-        } else {
+        if(_network) {
             try {
                 Customer customer = WSHelper.getCustomerInfo(sessionId);
                 if (customer == null) {
@@ -59,13 +54,21 @@ public class WSCallCustomerProfile extends AsyncTask<String, Void, Customer> {
                 Log.d(TAG, e.toString());
                 //publishProgress("failed.\n");
             }
+        } else  {
+            String customerFileName = "customer.json";
+
+            String customerJson = JsonFileManager.jsonReadFromFile(_context, customerFileName);
+            Log.d(TAG, "customerInfo: read from - " + customerFileName);
+
+            Customer jsonCustomer = JsonCodec.decodeCustomerInfo(customerJson);
+            Log.d(TAG, "customerInfo: jsonCustomer - " + jsonCustomer);
+            return jsonCustomer;
         }
         return null;
     }
 
     @Override
     protected void onPostExecute(Customer customer) {
-        Log.d(TAG, "Customer: " + customer);
         if (!customer.equals(null)) {
             int nif = customer.getFiscalNumber();
             customerNif.setText(String.valueOf(nif));

@@ -2,6 +2,8 @@ package pt.ulisboa.tecnico.sise.insure.app.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -38,10 +40,9 @@ public class ProfileActivity extends AppCompatActivity {
         customerAddress  = (TextView) findViewById(R.id.customer_address);
         insurancePolicyNumber  = (TextView) findViewById(R.id.customer_inc_pol_numb);
         sessionId = getIntent().getIntExtra("sessionId", 0);
-        boolean haveService = getIntent().getBooleanExtra("haveService", false);
 
         new WSCallCustomerProfile(customerName, customerNif, customerAddress,
-                customerBirthdate, insurancePolicyNumber, sessionId, _context, haveService).execute();
+                customerBirthdate, insurancePolicyNumber, sessionId, _context, isNetworkAvailable()).execute();
 
         //Menu Button
         buttonProfileMenu.setOnClickListener(new View.OnClickListener() {
@@ -64,4 +65,12 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo nf = connectivityManager.getActiveNetworkInfo();
+        Log.d(TAG, "Network: " + (nf != null && nf.isConnected()));
+        return (nf != null && nf.isConnected());
+    }
+
 }
