@@ -6,30 +6,21 @@ import android.util.Log;
 import android.widget.Toast;
 
 import pt.ulisboa.tecnico.sise.insure.app.WSHelper;
+import pt.ulisboa.tecnico.sise.insure.datamodel.GlobalState;
 
 public class WSLogOutTask extends AsyncTask<Void, String, Boolean> {
     public final static String TAG = "CallTask";
     Context _context;
+    GlobalState _global;
 
-    public WSLogOutTask(Context context) {
+    public WSLogOutTask(Context context, GlobalState global) {
         _context = context;
+        _global = global;
     }
 
     @Override
     protected Boolean doInBackground(Void... params) {
-        int sessionId = -1;
-        /*
-         * Test method call invocation: login
-         */
-        try{
-            String username = "j";
-            String password = "j";
-            sessionId = WSHelper.login(username,password);        // exists and password correct
-            Log.d(TAG, "Login result => " + sessionId);
-        } catch (Exception e) {
-            Log.d(TAG, e.toString());
-        }
-
+        int sessionId = _global.getSessionId();
         /*
          * Test method call invocation: logout
          */

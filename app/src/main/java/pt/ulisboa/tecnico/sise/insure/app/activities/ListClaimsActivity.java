@@ -57,7 +57,7 @@ public class ListClaimsActivity extends AppCompatActivity {
         _buttonLogOut.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 gState.removeFiles();
-                new WSLogOutTask(_context).execute();
+                new WSLogOutTask(_context, gState).execute();
                 Log.d(LOG_TAG, "Logout debug message!");
                 Intent intent = new Intent(ListClaimsActivity.this, LogInActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
