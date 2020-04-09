@@ -43,6 +43,7 @@
         android:layout_marginRight="15dp"
         android:autofillHints="@string/EmailAddress"
         android:ems="10"
+        android:textColorHint="#fff"
         android:hint="@string/EmailAddress"
         android:inputType="textEmailAddress" />
 
@@ -58,6 +59,7 @@
         android:layout_alignParentRight="true"
         android:autofillHints="@string/Password"
         android:ems="10"
+        android:textColorHint="#fff"
         android:hint="@string/Password"
         android:inputType="textPassword" />
 

@@ -14,10 +14,10 @@
         android:ems="10"
         android:gravity="center"
         android:inputType="textPersonName"
-        android:text="Claim Title"
+        android:hint="Insert Claim Title Here"
         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-        android:textColor="#fff"
-        android:textSize="50sp"
+        android:textColorHint="#fff"
+        android:textSize="40sp"
         android:typeface="normal" />
 
     <LinearLayout
@@ -30,6 +30,8 @@
             android:layout_width="141dp"
             android:layout_height="49dp"
             android:layout_weight="1"
+            android:textColor="#fff"
+            android:textColorHint="#fff"
             android:text="Plate Number:" />
 
         <Spinner
@@ -45,7 +47,9 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="date"
-        android:text="Data of Accurance:"
+        android:hint="Data of Occurance:"
+        android:textColorHint="#fff"
+        android:textColor="#fff"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="18sp" />
 
@@ -55,7 +59,9 @@
         android:layout_height="267dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Claim's Description"
+        android:hint="Claim's Description"
+        android:textColorHint="#fff"
+        android:textColor="#fff"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="18sp" />
 

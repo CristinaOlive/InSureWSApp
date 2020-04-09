@@ -48,6 +48,7 @@ public class WSReadClaimTask extends AsyncTask<Void, String, ClaimRecord> {
                 claimRecord = WSHelper.getClaimInfo(sessionId, _claimIdInt);
                 if (claimRecord != null) {
                     Log.d(TAG, "Get Claim Info result claimId " + _claimIdInt + " => " + claimRecord.toString());
+                    return claimRecord;
                 } else {
                     Log.d(TAG, "Get Claim Info result claimId " + _claimIdInt + " => null.");
                 }

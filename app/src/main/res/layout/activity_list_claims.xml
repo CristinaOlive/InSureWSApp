@@ -19,6 +19,7 @@
 
     <ListView
         android:id="@+id/list_claims_list"
+        android:textColor="#fff"
         android:layout_width="429dp"
         android:layout_height="349dp">
 

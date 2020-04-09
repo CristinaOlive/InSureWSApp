@@ -45,7 +45,10 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
+            android:lines="1"
+            android:maxLines="2"
             android:text="Name"
+
             android:textSize="14sp" />
 
         <TextView

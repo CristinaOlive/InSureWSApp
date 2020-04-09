@@ -96,12 +96,10 @@ public class GlobalState extends Application {
 
     public List<ClaimRecord> readFileRecords() {
         String customerFileName = "claimsRecord.json";
-
         String customerJson = JsonFileManager.jsonReadFromFile(this, customerFileName);
         Log.d(TAG, "customerInfo: read from - " + customerFileName);
-
         List<ClaimRecord> jsonCustomer = JsonCodec.decodeRecordList(customerJson);
-        Log.d(TAG, "customerInfo: jsonCustomer - " + jsonCustomer);
+        Log.d(TAG, "customerInfo: jsonCustomer - " + jsonCustomer.toString());
         return jsonCustomer;
     }
 
@@ -142,7 +140,9 @@ public class GlobalState extends Application {
         File dir = getFilesDir();
         String customerFileName = "customer.json";
         String customerFileNameClaim = "claimsList.json";
+        String customerFileNameRecord = "claimsRecord.json";
         deleteFile(customerFileName);
         deleteFile(customerFileNameClaim);
+        deleteFile(customerFileNameRecord);
     }
 }
