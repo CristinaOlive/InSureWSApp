@@ -126,7 +126,7 @@ public class NewClaimActivity extends AppCompatActivity implements AdapterView.O
     }
 
     public void addItemsOnSpineer() {
-        new WSPlatesTask(_context, spin, gState.getSessionId()).execute();
+        new WSPlatesTask(_context, spin, gState).execute();
     }
 
 

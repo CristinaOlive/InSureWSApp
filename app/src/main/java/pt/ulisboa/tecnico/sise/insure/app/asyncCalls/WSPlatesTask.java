@@ -10,17 +10,20 @@ import android.widget.Toast;
 import java.util.List;
 
 import pt.ulisboa.tecnico.sise.insure.app.WSHelper;
+import pt.ulisboa.tecnico.sise.insure.datamodel.GlobalState;
 
 public class WSPlatesTask extends AsyncTask<Void, String, List<String>> {
     public final static String TAG = "CallTask";
     private Context _context;
     private Spinner _spin;
     private  int sessionId = -1;
+    GlobalState _global;
 
-    public WSPlatesTask(Context context, Spinner spin, int sessionId) {
-        this.sessionId = sessionId;
+    public WSPlatesTask(Context context, Spinner spin, GlobalState global) {
         _context = context;
         _spin = spin;
+        _global = global;
+        this.sessionId = _global.getSessionId();
     }
 
     @Override
